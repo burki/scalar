@@ -91,7 +91,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'en';
+$config['language']	= (getenv('SCALAR_LANGUAGE') ? getenv('SCALAR_LANGUAGE') : 'en');
 
 /*
 |--------------------------------------------------------------------------
