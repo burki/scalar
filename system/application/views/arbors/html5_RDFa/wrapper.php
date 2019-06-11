@@ -59,7 +59,7 @@ function print_rdf($rdf, $tabs=0, $ns=array(), $hide=array(), $aria=false, $forc
 echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 ?>
 <!DOCTYPE html>
-<html xml:lang="en" lang="en"
+<html xml:lang="<?= $this->config->item('language') ?>" lang="<?= $this->config->item('language') ?>"
 <?php
 foreach ($namespaces as $ns_prefix => $ns_uri):
 	echo '	xmlns:'.$ns_prefix.'="'.$ns_uri.'"'."\n";
