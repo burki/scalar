@@ -57,11 +57,11 @@ class System extends MY_Controller {
 		if ($this->data['render_published']) {
 			if (isset($_REQUEST['sq']) && !empty($_REQUEST['sq'])) {
 				$this->data['other_books'] = $this->books->get_index_books(false, $_REQUEST['sq']);
-				if (empty($this->data['other_books'])) $this->data['book_list_search_error'] = 'No books found for "'.trim(htmlspecialchars($_REQUEST['sq'])).'"';
+				if (empty($this->data['other_books'])) $this->data['book_list_search_error'] = sprintf(lang('welcome.no_books_found'), trim(htmlspecialchars($_REQUEST['sq'])));
 			} elseif (!$this->data['hide_published'] || isset($_REQUEST['view_all'])) {
 				$this->data['other_books'] = $this->books->get_index_books(false);
 			} elseif (isset($_REQUEST['sq'])) {
-				$this->data['book_list_search_error'] = 'Please enter a search term';
+				$this->data['book_list_search_error'] = lang('welcome.enter_search_term');
 			}
 		}
 
@@ -197,9 +197,9 @@ class System extends MY_Controller {
 		if ('do_forgot_password'==$action) {
 			$email =@ trim($_POST['email']);
 			if (empty($email)) {
-				$this->data['forgot_login_error'] = 'Please enter your login email address';
+				$this->data['forgot_login_error'] = lang('forgot_password.empty');
 			} elseif (!$this->users->get_by_email($email)) {
-				$this->data['forgot_login_error'] = 'Could not find the entered email address';
+				$this->data['forgot_login_error'] = lang('forgot_password.not_found');
 			} else {
 				$reset_string = $this->users->set_reset_string($email);
 				$this->sendmail->reset_password($email, $reset_string);

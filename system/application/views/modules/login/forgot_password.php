@@ -20,21 +20,21 @@
 			<tr>
 				<td class="login_header" colspan="2">
 					<img src="application/views/modules/login/scalar_logo.png" alt="scalar_logo" width="75" height="68" />
-					<h4>Please enter your login email address below. An email will be sent to you with reset instructions.</h4>
+					<h4><?=lang('forgot_password.header')?></h4>
 				</td>
 			</tr>
 			<tr>
-				<td class="field">Email</td><td class="value"><input type="text" name="email" value="<?=(isset($_POST['email']))?htmlspecialchars(trim($_POST['email'])):''?>" class="input_text" /></td>
+				<td class="field"><?=lang('login.email')?></td><td class="value"><input type="text" name="email" value="<?=(isset($_POST['email']))?htmlspecialchars(trim($_POST['email'])):''?>" class="input_text" /></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td class="form_buttons">
-					<input type="submit" class="generic_button large default" value="Reset password" />
+					<input type="submit" class="generic_button large default" value="<?=lang('forgot_password.reset')?>" />
 				</td>
 			</tr>
 		</table>
 	</form>
-	<small><a href="<?=base_url()?>">Return to index</a> | <a href="http://scalar.usc.edu/terms-of-service/" target="_blank">Terms of Service</a></small>
+	<small><a href="<?=base_url()?>"><?=lang('footer.return_to_index')?></a> | <a href="http://scalar.usc.edu/terms-of-service/" target="_blank"><?=lang('footer.tos') ?></a></small>
 </div>
 <br clear="both" />
 </div>

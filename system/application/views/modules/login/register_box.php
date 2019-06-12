@@ -21,35 +21,35 @@ if (isset($_POST['registration_key'])) $registration_key = trim(htmlspecialchars
 			<tr>
 				<td class="login_header" colspan="2">
 					<img src="application/views/modules/login/scalar_logo.png" alt="scalar_logo" width="75" height="68" />
-					<h4>Please register a new account below</h4>
+					<h4><?=lang('register.header')?></h4>
 				</td>
 			</tr>
 			<tr>
-				<td class="field">Email <span style="color:red;">*</span> <a class="question_answer" alt="Your email address is your login to Scalar, though no communication between your email provider and Scalar will occur."></a></td><td class="value"><input type="text" name="email" value="<?=(isset($_POST['email']))?trim(htmlspecialchars($_POST['email'])):''?>" class="input_text" /></td>
+				<td class="field"><?=lang('login.email')?> <span style="color:red;">*</span> <a class="question_answer" alt="Your email address is your login to Scalar, though no communication between your email provider and Scalar will occur."></a></td><td class="value"><input type="text" name="email" value="<?=(isset($_POST['email']))?trim(htmlspecialchars($_POST['email'])):''?>" class="input_text" /></td>
 			</tr>
 			<tr>
-				<td class="field">Full name <span style="color:red;">*</span></td><td class="value"><input type="text" name="fullname" value="<?=(isset($_POST['fullname']))?trim(htmlspecialchars($_POST['fullname'])):''?>" class="input_text" /></td>
+				<td class="field"><?=lang('register.full_name')?> <span style="color:red;">*</span></td><td class="value"><input type="text" name="fullname" value="<?=(isset($_POST['fullname']))?trim(htmlspecialchars($_POST['fullname'])):''?>" class="input_text" /></td>
 			</tr>
 			<? if ($register_key): ?>
 			<tr>
 				<td class="field">Registration<br />key <span style="color:red;">*</span></td><td class="value"><input type="text" name="registration_key" value="<?=$registration_key?>" class="input_text" />
-			<? 
+			<?
 			   $reg_msg = $this->config->item('registration_key_msg');
 			   if (!empty($reg_msg)):
-			     echo '<div class="register_msg">'.$reg_msg.'</div>'."\n"; 
+			     echo '<div class="register_msg">'.$reg_msg.'</div>'."\n";
 			   endif;
 			?>
 				</td>
 			</tr>
 			<? endif ?>
 			<tr>
-				<td class="field">Password <span style="color:red;">*</span></td><td class="value"><input type="password" name="password" class="input_text" autocomplete="off" /></td>
+				<td class="field"><?=lang('login.password')?> <span style="color:red;">*</span></td><td class="value"><input type="password" name="password" class="input_text" autocomplete="off" /></td>
 			</tr>
 			<tr>
-				<td class="field">Confirm<br />password <span style="color:red;">*</span></td><td class="value"><input type="password" name="password_2" class="input_text" autocomplete="off" /></td>
+				<td class="field"><?=lang('register.password_confirm')?> <span style="color:red;">*</span></td><td class="value"><input type="password" name="password_2" class="input_text" autocomplete="off" /></td>
 			</tr>
 			<tr>
-				<td class="field">Terms of Service <span style="color:red;">*</span></td><td class="value"><input type="checkbox" name="tos" value="1" id="tos" /><label for="tos"> I have found, read and accepted the <a href="http://scalar.usc.edu/terms-of-service/" target="_blank">Terms of Service</a></label></td>
+				<td class="field"><?=lang('footer.tos')?> <span style="color:red;">*</span></td><td class="value"><input type="checkbox" name="tos" value="1" id="tos" /><label for="tos"> <?=lang('register.tos_accepted')?></label></td>
 			</tr>
 			<!-- <tr>
 				<td class="field">Title of<br />first book<br /><small>(optional)</small></td><td class="value"><input type="text" name="book_title" value="<?=(isset($_POST['book_title']))?trim(htmlspecialchars($_POST['book_title'])):''?>" class="input_text" /></td>
@@ -75,12 +75,12 @@ if (isset($_POST['registration_key'])) $registration_key = trim(htmlspecialchars
 			<tr>
 				<td></td>
 				<td class="form_buttons">
-					<input type="submit" class="generic_button large default" value="Register" />
+					<input type="submit" class="generic_button large default" value="<?=lang('register.register')?>" />
 				</td>
 			</tr>
 		</table>
 	</form>
-	<small><a href="<?=base_url()?>">Return to index</a> | <a href="http://scalar.usc.edu/terms-of-service/" target="_blank">Terms of Service</a></small>
+	<small><a href="<?=base_url()?>"><?=lang('footer.return_to_index') ?></a> | <a href="http://scalar.usc.edu/terms-of-service/" target="_blank"><?=lang('footer.tos') ?></a></small>
 </div>
 <br clear="both" />
 </div>

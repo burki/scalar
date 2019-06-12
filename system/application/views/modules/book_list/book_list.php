@@ -71,9 +71,9 @@ if ($render_published):
 <form action="<?=base_url()?>" id="book_list_search">
 <div>
 <div><input type="text" name="sq" class="generic_text_input" value="<?=(isset($_REQUEST['sq'])?trim(htmlspecialchars($_REQUEST['sq'])):'')?>" /></div>
-<div><input type="submit" class="generic_button" value="Search" /></div>
+<div><input type="submit" class="generic_button" value="<?=lang('welcome.search')?>" /></div>
 <? if ($hide_published): ?>
-<div><button type="submit" class="generic_button" value="1" name="view_all" >View All</button></div>
+<div><button type="submit" class="generic_button" value="1" name="view_all" ><?=lang('welcome.view_all')?></button></div>
 <? endif; ?>
 </div>
 </form>
@@ -90,12 +90,12 @@ echo '</div>'."\n";
 
 if ($login->is_logged_in) {
 	echo '<div id="user_books">';
-	echo '<h3>Your Books</h3>';
+	echo '<h3>'.lang('welcome.your_books').'</h3>';
 	if (count($user_books) > 0) {
 		echo '<ul class="book_icons">';
 		print_books($user_books, true);
 	} else {
-		echo '<p>You haven\'t created any books yet. You can in the Dashboard\'s My Account tab.</p>';
+		echo '<p>'.lang('welcome.your_books_missing').'</p>';
 	}
 	echo '</div>';
 }

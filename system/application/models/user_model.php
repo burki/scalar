@@ -242,7 +242,7 @@ class User_model extends MY_Model {
     public function get_by_email_and_reset_string($email='', $reset_string='') {
 
     	if (empty($email) || empty($reset_string)) return false;
-    	
+
     	$this->db->select('*');
     	$this->db->from($this->users_table);
     	$this->db->where($this->users_table.'.email', $email);
@@ -433,15 +433,15 @@ class User_model extends MY_Model {
 
     public function add($array=array()) {
 
-		if (empty($array['email'])) throw new Exception('Email is a required field');
-		if ($this->get_by_email($array['email'])) throw new Exception('Email already in use');
-		if (empty($array['fullname'])) throw new Exception('Full name is a required field');
-		if (empty($array['password'])) throw new Exception('Password is a required field');
+		if (empty($array['email'])) throw new Exception(lang('register.email_empty'));
+		if ($this->get_by_email($array['email'])) throw new Exception(lang('register.email_duplicate'));
+		if (empty($array['fullname'])) throw new Exception(lang('register.fullname_empty'));
+		if (empty($array['password'])) throw new Exception(lang('register.passwort_empty'));
 
 		$fullname = trim($array['fullname']);
 		$email = trim($array['email']);
-    	if (empty($fullname)) throw new Exception('Could not resolve fullname');  // E.g., a string of all spaces
-    	if (empty($email)) throw new Exception('Could not resolve email');  // E.g., a string of all spaces
+    	if (empty($fullname)) throw new Exception(lang('register.fullname_invalid'));  // E.g., a string of all spaces
+    	if (empty($email)) throw new Exception(lang('register.email_invalid'));  // E.g., a string of all spaces
 
 		$data = array('fullname' => $fullname, 'email' => $email);
 		$this->db->insert($this->users_table, $data);
@@ -462,7 +462,7 @@ class User_model extends MY_Model {
 		// ReCAPTCHA version 2
 		$recaptcha2_site_key = $this->config->item('recaptcha2_site_key');
 		$recaptcha2_secret_key = $this->config->item('recaptcha2_secret_key');
-		if (empty($recaptcha2_site_key)||empty($recaptcha2_secret_key)) $recaptcha2_site_key = $recaptcha2_secret_key = null;	    	
+		if (empty($recaptcha2_site_key)||empty($recaptcha2_secret_key)) $recaptcha2_site_key = $recaptcha2_secret_key = null;
     	// Choose one or the other
     	if (!empty($recaptcha2_site_key)) {
     		require_once(APPPATH.'libraries/recaptcha2/autoload.php');
@@ -470,13 +470,13 @@ class User_model extends MY_Model {
     		require_once(APPPATH.'libraries/recaptcha/recaptchalib.php');
     	}
 
-    	if (empty($array['tos'])) throw new Exception('Please indicate that you have accepted the Terms of Service');
-		if (empty($array['password'])) throw new Exception('Password is a required field');
-		if (empty($array['password_2'])) throw new Exception('Confirm password is a required field');
-		if ($array['password'] != $array['password_2']) throw new Exception('Password and confirm password do not match');
-		
+    	if (empty($array['tos'])) throw new Exception(lang('register.tos_empty'));
+		if (empty($array['password'])) throw new Exception(lang('register.password_empty'));
+		if (empty($array['password_2'])) throw new Exception(lang('register.password_confirm_empty'));
+		if ($array['password'] != $array['password_2']) throw new Exception(lang('register.password_not_confirmed'));
+
 		if (!empty($recaptcha2_site_key)) {
-			if (!isset($_POST['g-recaptcha-response'])) throw new Exception('Invalid ReCAPTCHA form field');
+			if (!isset($_POST['g-recaptcha-response'])) throw new Exception(lang('register.recaptcha_invalid'));
 			$recaptcha = new \ReCaptcha\ReCaptcha($recaptcha2_secret_key);
 			$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 			if ($resp->isSuccess()):
@@ -488,13 +488,13 @@ class User_model extends MY_Model {
                 	$errors[] = $code;
             	}
             	*/
-            	throw new Exception('CAPTCHA did not validate');
+            	throw new Exception(lang('register.recaptcha_fail'));
 			endif;
     	} elseif (!empty($recaptcha_private_key)) {
 			$resp = recaptcha_check_answer($recaptcha_private_key, $_SERVER["REMOTE_ADDR"], $array["recaptcha_challenge_field"], $array["recaptcha_response_field"]);
-			if (!$resp->is_valid) throw new Exception ('Incorrect CAPTCHA value');
+			if (!$resp->is_valid) throw new Exception (lang('register.recaptcha_incorrect'));
 		}
-		
+
 		return $this->add($array);
 
     }
