@@ -7,7 +7,7 @@
 <?$this->template->add_js('system/application/views/widgets/edit/jquery.content_selector.js')?>
 <?
 	if (empty($book)):
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	else:
 		$default_rel_type = 'term';  // Make comments default for easy access to hidden comments
 ?>
@@ -106,7 +106,7 @@
 
 		function get_versions(content_id, version_id, the_link) {
 			var $the_link = $(the_link);
-			if ($the_link.html()=='Loading...') return;
+			if ($the_link.html()=='<?=lang('dashboard.loading')?>') return;
 			// Get versions
 			if (!$the_link.data('is_open')) {
 				$the_link.data('orig_html', $the_link.html());
@@ -261,9 +261,9 @@
 		<div style="float:right;">To remove a page from a category, edit the page's row and set the category field to (empty)</div>
 
 		<form onsubmit="deleteFiles();return false;">
-		<input type="submit" value="Delete selected pages" class="generic_button" />
+		<input type="submit" value="<?=lang('dashboard.delete_pages')?>" class="generic_button" />
 		&nbsp; &nbsp;
-		<input id="check_all" type="checkbox" /><label for="check_all"> Check all</label>
+		<input id="check_all" type="checkbox" /><label for="check_all"> <?=lang('dashboard.check_all')?></label>
 		</form>
 
 

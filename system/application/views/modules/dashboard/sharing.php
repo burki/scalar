@@ -59,15 +59,15 @@ $(window).ready(function() {
 
 <?php
 	if (empty($book)) {
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	}
 	if (isset($_REQUEST['action']) && $_REQUEST['action']=='book_sharing_saved') {
 		echo '<div class="saved">';
-		echo 'Sharing options have been saved ';
+		echo lang('dashboard.book_sharing_saved');
 		echo '<div style="float:right;">';
-		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">back to '.$book->scope.'</a>';
+		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">'.lang('dashboard.back_to').$book->scope.'</a>';
 		echo ' | ';
-		echo '<a href="?book_id='.$book->book_id.'&zone=sharing#tabs-sharing">clear</a>';
+		echo '<a href="?book_id='.$book->book_id.'&zone=sharing#tabs-sharing">'.lang('dashboard.clear').'</a>';
 		echo '</div>';
 		echo '</div><br />';
 	}
@@ -78,70 +78,70 @@ $(window).ready(function() {
 		if (!empty($book_id) && $row->book_id != $book_id) die('Could not match book with book ID');
 
 	echo '<tr style="display:none;">';
-	echo '<td><p>Title</p></td>';
+	echo '<td><p>'.lang('dashboard.book_title').'</p></td>';
 	echo '<td colspan="2"><input name="title" type="text" value="'.htmlspecialchars($row->title).'" style="width:100%;" /></td>';
 	echo '</tr>'."\n";
 
 	echo '<tr typeof="books">';
-	echo '<td><p>Availability</p>';
+	echo '<td><p>'.lang('dashboard.availability').'</p>';
 	echo '</td>'."\n";
 	echo '<td style="vertical-align:middle;" colspan="2">';
 	echo '<p>';
-	echo 'Make URL public? &nbsp;<select name="url_is_public"><option value="0"'.(($row->url_is_public)?'':' selected').'>No</option><option value="1"'.(($row->url_is_public)?' selected':'').'>Yes</option></select>';
-	echo '<br /><small>Book can be accessed via its URL without requiring login permissions</small>';
+	echo lang('dashboard.url_is_public').' &nbsp;<select name="url_is_public"><option value="0"'.(($row->url_is_public)?'':' selected').'>'.lang('dashboard.no').'</option><option value="1"'.(($row->url_is_public)?' selected':'').'>'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.url_is_public_note').'</small>';
 	echo '</p>';
 	echo '<p>';
-	echo 'Display in Scalar indexes? &nbsp;<select name="display_in_index"><option value="0"'.(($row->display_in_index)?'':' selected').'>No</option><option value="1"'.(($row->display_in_index)?' selected':'').'>Yes</option></select>';
-	echo '<br /><small>Book will be listed in lists of public books, feeds, etc</small>';
+	echo lang('dashboard.display_in_index').' &nbsp;<select name="display_in_index"><option value="0"'.(($row->display_in_index)?'':' selected').'>'.lang('dashboard.no').'</option><option value="1"'.(($row->display_in_index)?' selected':'').'>'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.display_in_index_note').'</small>';
 	echo '</p>';
 	echo "</td>\n";
 	echo "</tr>\n";
 	echo '<tr typeof="books">';
-	echo '<td><p>Reviewability</p>';
+	echo '<td><p>'.lang('dashboard.reviewability').'</p>';
 	echo '</td>'."\n";
 	echo '<td style="vertical-align:middle;" colspan="2">';
 	echo '<p>';
-	echo 'Automatically approve all user comments? &nbsp;<select id="auto-approve"><option value="0" selected>No</option><option value="1">Yes</option></select>';
-	echo '<br /><small>If set to "No" comments are moderated and can be approved by authors in the Comments tab</small>';
+	echo lang('dashboard.auto_approve').' &nbsp;<select id="auto-approve"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.auto_approve_note').'</small>';
 	echo '</p>';
 	echo '<p>';
-	echo 'Email book authors about new comments? &nbsp;<select id="email-authors"><option value="0" selected>No</option><option value="1">Yes</option></select>';
-	echo '<br /><small>If set to "Yes" users with author privileges (set in Book users tab) will be emailed when new comments are contributed</small>';
+	echo lang('dashboard.email_authors').' &nbsp;<select id="email-authors"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.email_authors_note').'</small>';
 	echo '</p>';
 	echo '<p>';
-	echo 'Add the <a href="https://hypothes.is/" target="_blank">Hypothes.is</a> sidebar? &nbsp;<select id="hypothesis"><option value="0" selected>No</option><option value="1">Yes</option></select>';
-	echo '<br /><small>A sidebar will be layered over your book adding <a href="https://hypothes.is/" target="_blank">Hypothes.is</a> collaborative review and commenting features</small>';
+	echo lang('dashboard.hypothesis').' &nbsp;<select id="hypothesis"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.no').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.hypothesis_note').'</small>';
 	echo '</p>';
 	if(isset($plugins) && isset($plugins['thoughtmesh'])) {
 		echo '<p>';
-		echo 'Add the <a href="http://thoughtmesh.net/" target="_blank">Thoughtmesh</a> widget to the footer? &nbsp;<select id="thoughtmesh"><option value="0" selected>No</option><option value="1">Yes</option></select>';
+		echo 'Add the <a href="http://thoughtmesh.net/" target="_blank">Thoughtmesh</a> widget to the footer? &nbsp;<select id="thoughtmesh"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
 		echo '<br /><small>A widget will be added to the footer of each Scalar 2 page in your book adding <a href="http://thoughtmesh.net/" target="_blank">Thoughtmesh</a> page interconnections</small>';
 		echo '</p>';
 	}
 	echo "</td>\n";
 	echo "</tr>\n";
-	echo '<td><p>Joinability</p>';
+	echo '<td><p>'.lang('dashboard.joinability').'</p>';
 	echo '</td>'."\n";
 	echo '<td style="vertical-align:middle;" colspan="2">';
 	echo '<p>';
-	echo 'Allow requests to join book? &nbsp;<select id="joinable"><option value="0" selected>No</option><option value="1">Yes</option></select>';
-	echo '<br /><small>An email will be sent to you when a user requests book authorship</small>';
+	echo lang('dashboard.joinable').' &nbsp;<select id="joinable"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.joinable_note').'</small>';
 	echo '</p>';
 	echo "</td>\n";
 	echo "</tr>\n";
 	echo '<tr typeof="books">';
-	echo '<td><p>Duplicability</p>';
+	echo '<td><p>'.lang('dashboard.duplicability').'</p>';
 	echo '</td>'."\n";
 	echo '<td style="vertical-align:middle;" colspan="2">';
 	echo '<p>';
-	echo 'Allow book to be duplicated by others? &nbsp;<select id="duplicatable"><option value="0" selected>No</option><option value="1">Yes</option></select>';
-	echo '<br /><small>Book will display in list of duplicatable books regardless of availability settings</small>';
+	echo lang('dashboard.duplicatable').' &nbsp;<select id="duplicatable"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
+	echo '<br /><small>'.lang('dashboard.duplicatable_note').'</small>';
 	echo '</p>';
 	echo "</td>\n";
 	echo "</tr>\n";
 	// Saves
 	echo "<tr>\n";
-	echo '<td style="padding-top:8px;text-align:right;" colspan="3"><span class="save_changes">You have unsaved changes.</span> &nbsp; <a class="generic_button large default" href="javascript:;">Save</a></td>';
+	echo '<td style="padding-top:8px;text-align:right;" colspan="3"><span class="save_changes">'.lang('dashboard.unsaved_changes').'</span> &nbsp; <a class="generic_button large default" href="javascript:;">'.lang('dashboard.save').'</a></td>';
 	echo "</tr>\n";
 	endif;
 ?>

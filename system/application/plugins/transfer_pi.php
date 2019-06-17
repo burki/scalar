@@ -17,7 +17,7 @@ class Transfer {
 		$this->plugin_path = strtolower(get_class($this)).'/index.html';
 		$this->plugin_dir = dirname(__FILE__).'/'.$this->plugin_path;
 		if (file_exists($this->plugin_dir)) $this->plugin_exists = true;
-			
+
 		if (!empty($data['book'])) {
 			$this->rdf_url_json = confirm_slash(base_url()).$data['book']->slug.'/rdf/instancesof/content?format=json&rec=1&ref=1';
 			$this->rdf_url_xml = confirm_slash(base_url()).$data['book']->slug.'/rdf/instancesof/content?&rec=1&ref=1';
@@ -31,7 +31,7 @@ class Transfer {
 	public function get() {
 
 		if (!isset($this->dest_url)) {
-			echo 'Please select a book to manage using the pulldown menu above';
+			echo lang('dashboard.select_book_note');
 			return;
 		}
 
@@ -54,13 +54,13 @@ class Transfer {
 	        	Simply place the URL of the source book into the Source Book field.  Alternatively, you can
 	        	import snippets of a Scalar book using the Paste RDF tab (<a href="javascript:void(null);" onclick="$('#snippet_dialog').dialog({modal:true,width:parseInt($(window).width())*0.8,height:parseInt($(window).height())*0.8});">learn more</a>).</p>
 				<div class="plugin <?=strtolower(get_class($this))?>">
-<?php 
+<?php
 			if ($this->plugin_exists) {
 				echo '<iframe style="width:100%; min-height:600px; border:none;" src="application/plugins/'.$this->plugin_path.$get_vars.'"></iframe>'."\n";
 			} else {
 				echo '<div class="alert alert-warning">Please contact a system administrator to install the plugin in a folder named <b>'.strtolower(get_class($this)).'</b> at <b>/system/application/plugins/</b>.</div>';
 			}
-?>	
+?>
 				</div>
 				<div id="snippet_dialog" title="Importing" style="display:none;">
   				<p>

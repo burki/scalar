@@ -15,7 +15,7 @@ if ($login->is_logged_in):
 		echo '<br />'."\n";
 	endif;
 	if (!empty($book) && $this->uri->rsegments[1]=='system' && $this->uri->rsegments[2]=='dashboard') {
-		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">Back to '.$book->scope.'</a>'."\n";
+		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">'.lang('login.back_to').' '.$book->scope.'</a>'."\n";
 	} elseif ($this->uri->rsegments[1]=='system' && $this->uri->rsegments[2]=='dashboard') {
 		echo '<a href="'.confirm_slash(base_url()).'">'.lang('login.back_to_index').'</a>'."\n";
 	} elseif (!empty($book) && $user_level!='Author') {

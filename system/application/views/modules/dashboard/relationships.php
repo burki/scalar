@@ -5,7 +5,7 @@
 <?$this->template->add_js('system/application/views/modules/dashboard/jquery.dashboardtable.js')?>
 <?
 	if (empty($book)):
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	else:
 		$default_rel_type = 'reply';  // Make comments default for easy access to hidden comments
 ?>
@@ -215,8 +215,8 @@
 		<br />
 
 		<form onsubmit="deleteFiles();return false;">
-		<input type="submit" value="Delete selected pages" class="generic_button" />
+		<input type="submit" value="<?=lang('dashboard.delete_pages')?>" class="generic_button" />
 		&nbsp; &nbsp;
-		<input id="check_all" type="checkbox" /><label for="check_all"> Check all</label>
+		<input id="check_all" type="checkbox" /><label for="check_all"> <?=lang('dashboard.check_all')?></label>
 		</form>
 <? endif ?>

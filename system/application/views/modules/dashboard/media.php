@@ -5,7 +5,7 @@
 <?$this->template->add_js('system/application/views/modules/dashboard/jquery.dashboardtable.js')?>
 <?
 	if (empty($book)):
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	else:
 ?>
 
@@ -54,7 +54,7 @@
    			$('#formSearch').find('a').click(function() {
    	   			start = 0;
    				$('.table_wrapper').html('<div id="loading">Loading</div>');
-				$(this).parent().find('input:first').val('Search for a media file');
+				$(this).parent().find('input:first').val('<?=lang('dashboard.search_media')?>');
 				$('.table_wrapper:first').scalardashboardtable('paginate', {query_type:'media',start:start,results:results,book_uri:book_uri,resize_wrapper_func:resizeList,tablesorter_func:tableSorter,pagination_func:pagination,paywall:paywall});
    			});
 
@@ -279,8 +279,8 @@
 		</script>
 
 		<form style="float:left;" id="formSearch">
-		<input type="text" name="sq" style="width:300px;float:left;margin-right:3px;" class="generic_text_input" value="Search for a media file" onmousedown="if (this.value=='Search for a media file') this.value='';" />
-		<input type="submit" value="Go" class="generic_button" />&nbsp; <a href="javascript:;">clear</a>&nbsp;
+		<input type="text" name="sq" style="width:300px;float:left;margin-right:3px;" class="generic_text_input" value="<?=lang('dashboard.search_media')?>" onmousedown="if (this.value=='<?=lang('dashboard.search_media')?>') this.value='';" />
+		<input type="submit" value="<?=lang('dashboard.go')?>" class="generic_button" />&nbsp; <a href="javascript:;"><?=lang('dashboard.clear')?></a>&nbsp;
 		<? if (count($current_book_files)): ?>
 		&nbsp; <span class="prev"></span>&nbsp; <span class="pagination"></span> <b class="total"><?=count($current_book_files)?></b> media &nbsp;<span class="next"></span>
 		&nbsp; &nbsp;<div class="search_metadata">Search: <label for="s_not_all"><input type="radio" id="s_not_all" name="s_all" value="0" checked /> title &amp; description (fast)</label> &nbsp;<label for="s_all"><input type="radio" id="s_all" name="s_all" value="1" /> all fields &amp; metadata (slow)</label></div>
@@ -292,7 +292,7 @@
 			$url_base = confirm_slash(base_url()).confirm_slash($book->slug);
 ?>
 		<div style="float:right;">
-			Import pages:&nbsp;
+			<?=lang('dashboard.import_pages')?>:&nbsp;
 			<select id="selectImportPages" class="generic_text_input">
 				<option value="">&nbsp;</option>
 				<optgroup label="Affiliated archives">
@@ -325,14 +325,14 @@
 		<br />
 
 		<form onsubmit="deleteFiles();return false;">
-		<input type="submit" value="Delete selected files" class="generic_button" />
+		<input type="submit" value="<?=lang('dashboard.delete_files')?>" class="generic_button" />
 		&nbsp; &nbsp;
-		<input id="check_all" type="checkbox" /><label for="check_all"> Check all</label>
+		<input id="check_all" type="checkbox" /><label for="check_all"> <?=lang('dashboard.check_all')?></label>
 		&nbsp; &nbsp;
 		<span class="prev"></span>&nbsp; <span class="pagination"></span> <b class="total"><?=count($current_book_files)?></b> media &nbsp;<span class="next"></span>
 		&nbsp; &nbsp; &nbsp;
-		Jump to: <select name="jump_to"><option value=""></option></select> of  <b><?=count($current_book_files)?></b> media
+		<?=lang('dashboard.jump_to')?>: <select name="jump_to"><option value=""></option></select> <?=lang('dashboard.of')?>  <b><?=count($current_book_files)?></b> media
 		&nbsp; &nbsp;
-		<span style="white-space:nowrap;">Show: <select name="num_results"></select> at a time</span>
+		<span style="white-space:nowrap;"><?=lang('dashboard.show')?>: <select name="num_results"></select> <?=lang('dashboard.at_a_time')?></span>
 		</form>
 <? endif ?>

@@ -21,7 +21,7 @@ var book_id = <?=(int) @$book->book_id?>;
 function select_interface(melon) {
     $('#interface').empty();
     var $template = $('<span id="select_template"><select name="template"></select>&nbsp; </span>').appendTo('#interface');
-    var $whats_this = $('<a class="whatsthis" href="javascript:void(null);">What\'s this?</a>').appendTo($template);
+    var $whats_this = $('<a class="whatsthis" href="javascript:void(null);"><?=htmlspecialchars(lang('dashboard.whatsthis'), ENT_QUOTES)?></a>').appendTo($template);
     $whats_this.click(function() {
 		$('<div></div>').melondialog({
 			data:JSON.parse($("#interfaces").text()),
@@ -61,7 +61,7 @@ function select_interface(melon) {
 			}
 		});
    	} else {
-		$('<span>There are no theme options for the current template</span>').appendTo('#interface');
+		$('<span><?=lang('dashboard.no_theme_options')?></span>').appendTo('#interface');
     }
     $('.cantaloupe').hide();
     console.log(selected_melon);
@@ -71,7 +71,7 @@ function select_interface(melon) {
 function select_versions() {
 	if ($('#versions_add_another').data('loading')) return;
 	$('#versions_add_another').data('loading', true);
-	$('#versions_add_another').html('Loading ...');
+	$('#versions_add_another').html('<?=lang('dashboard.loading')?>');
 	var book_id = $('link#book_id').attr('href');
 	var book_versions = [];
 	$('#versions').find('input[type="hidden"]').each(function() {
@@ -84,7 +84,7 @@ function select_versions() {
 		changeable:true,
 		multiple:true,
 		onthefly:false,
-		msg:'Selected content will be added to the <b>Table of Contents</b> items',
+		msg:'<?=lang('dashboard.add_selected_toc')?>',
 		callback:function(nodes){
 			console.log(nodes);
 			// Convert noes to book_versions array format
@@ -99,7 +99,7 @@ function select_versions() {
 			set_versions(formatted_nodes);
 		}
 	});
-	$('#versions_add_another').data('loading', false).html('Add table of contents item');
+	$('#versions_add_another').data('loading', false).html('<?=lang('dashboard.add_toc_item')?>');
 	/*
 		$('<div></div>').bookversionsdialog({
 			data:content_data,
@@ -182,7 +182,7 @@ $(window).ready(function() {
     });
 
     var predefined_css = $("#predefined_css").text();
-    $('textarea[name="custom_style"]').predefined({msg:'Insert CSS:',data:((predefined_css.length)?JSON.parse(predefined_css):{})});
+    $('textarea[name="custom_style"]').predefined({msg:'<?=lang('dashboard.insert_css')?>:',data:((predefined_css.length)?JSON.parse(predefined_css):{})});
 
 	$('input[name="slug"]').keydown(function() {
 		var $this = $(this);
@@ -311,23 +311,23 @@ function make_taxonomy_pages(onomy) {
 </script>
 <?
 	if (empty($book)) {
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	}
 
 	if (isset($_REQUEST['action']) && $_REQUEST['action']=='book_style_saved') {
 		echo '<div class="saved">';
-		echo 'Book style has been saved ';
+		echo lang('dashboard.book_style_saved');
 		echo '<div style="float:right;">';
-		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">back to '.$book->scope.'</a>';
+		echo '<a href="'.confirm_slash(base_url()).$book->slug.'">'.lang('dashboard.back_to').$book->scope.'</a>';
 		echo ' | ';
-		echo '<a href="?book_id='.$book->book_id.'&zone=style">clear</a>';
+		echo '<a href="?book_id='.$book->book_id.'&zone=style">'.lang('dashboard.clear').'</a>';
 		echo '</div>';
 		echo '</div><br />';
 	}
 ?>
 
 		<div id="slug-change-confirm" title="URI Segment">
-			Changing the URI Segment of the book will change its location on the web, which will make the old book URL unavailable.  Do you wish to continue?
+			<?=lang('dashboard.slug_change_confirm')?>
 		</div>
 		<div id="style-confirm" title="Extra HTML Tags">
 			You have HTML tags included in the Custom CSS box. Adding HTML to this box will cause style errors which may cause problems with your Scalar book. Note that &lt;style&gt; and &lt;/style&gt; tags are automatically included by Scalar.
@@ -347,10 +347,10 @@ function make_taxonomy_pages(onomy) {
 		if (!empty($row)):
 			// Title
 			echo '<tr typeof="books" class="styling_sub">';
-			echo '<td><h4 class="content_title">Basics</h4></td><td></td></tr>';
+			echo '<td><h4 class="content_title">'.lang('dashboard.book_basics').'</h4></td><td></td></tr>';
 			echo '<tr>';
 			echo '<tr typeof="books">';
-			echo '<td style="vertical-align:middle;">Title';
+			echo '<td style="vertical-align:middle;">'.lang('dashboard.book_title');
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
 			echo '<input name="title" type="text" value="'.htmlspecialchars($row->title).'" style="width:100%;" />';
@@ -358,7 +358,7 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Subtitle
 			echo '<tr typeof="books">';
-			echo '<td style="vertical-align:middle;">Subtitle';
+			echo '<td style="vertical-align:middle;">'.lang('dashboard.book_subtitle');
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
 			echo '<input name="subtitle" type="text" value="'.htmlspecialchars($row->subtitle).'" style="width:100%;" />';
@@ -366,7 +366,7 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Description
 			echo '<tr typeof="books">';
-			echo '<td style="vertical-align:middle;">Description';
+			echo '<td style="vertical-align:middle;">'.lang('dashboard.book_description');
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
 			echo '<input name="description" type="text" value="'.htmlspecialchars($row->description).'" style="width:100%;" />';
@@ -382,19 +382,19 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Main menu
 			echo '<tr typeof="books">';
-			echo '<td style="width:190px;">Table of Contents';
-			echo '<br /><small>Drag TOC items to reorder</small>';
+			echo '<td style="width:190px;">'.lang('dashboard.toc');
+			echo '<br /><small>'.lang('dashboard.toc_note').'</small>';
 			echo '</td>'."\n";
 			echo '<td colspan="2">';
 			echo '<ol id="versions"></ol>';
-			echo '<a href="javascript:void(null);" id="versions_add_another">Add table of contents item</a></td>'."\n";
+			echo '<a href="javascript:void(null);" id="versions_add_another">'.lang('dashboard.add_toc_item').'</a></td>'."\n";
 			echo "</tr>\n";
 			echo '<tr typeof="books" class="styling_sub">';
-			echo '<td><h4 class="content_title">Style</h4></td><td></td>';
+			echo '<td><h4 class="content_title">'.lang('dashboard.style').'</h4></td><td></td>';
 			echo '</tr>';
 			// Template/stylesheet
 			echo '<tr>';
-			echo '<td>Interface</td>'."\n";
+			echo '<td>'.lang('dashboard.interface').'</td>'."\n";
 			echo '<td>';
 			echo '<p id="interface">';
 			echo '</p>';
@@ -406,19 +406,19 @@ function make_taxonomy_pages(onomy) {
 			echo '<tr class="cantaloupe">';
 			echo '<td>Navigation</td>'."\n";
 			echo '<td>';
-			echo 'Display navigation buttons in margins? &nbsp;<select id="margin-nav"><option value="0" selected>No</option><option value="1">Yes</option></select>';
+			echo lang('dashboard.display_margin_navigation').' &nbsp;<select id="margin-nav"><option value="0" selected>'.lang('dashboard.no').'</option><option value="1">'.lang('dashboard.yes').'</option></select>';
 			echo "</td>\n";
 			echo '<td>';
 			echo "</td>\n";
 			echo "</tr>\n";
 			// Background
 			echo '<tr typeof="books">';
-			echo '<td><p>Background image</p></td>'."\n";
+			echo '<td><p>'.lang('dashboard.background_image').'</p></td>'."\n";
 			echo '<td style="vertical-align:middle;">';
 			if (!empty($row->background)) {
 				echo '<img src="'.abs_url($row->background,confirm_slash(base_url()).$row->slug).'?t='.time().'" style="vertical-align:middle;margin-right:10px;height:75px;border:solid 1px #aaaaaa;" /> '."\n";
 			}
-			echo '<p>Select image: <select name="background" style="max-width:400px;"><option value="">Choose an imported image</option>';
+			echo '<p>'.lang('dashboard.select_image').': <select name="background" style="max-width:400px;"><option value="">'.lang('dashboard.choose_imported_image').'</option>';
   			$matched = false;
   			foreach ($current_book_images as $book_image_row) {
   				if (@$row->background==$book_image_row->versions[$book_image_row->version_index]->url) $matched = true;
@@ -429,30 +429,30 @@ function make_taxonomy_pages(onomy) {
   				echo '<option value="'.@$row->background.'" selected>'.@$row->background.'</option>';
   			}
 			echo '</select></p>';
-			if (!empty($row->background)) echo '<p><input type="checkbox" name="remove_background" id="remove_background" value="1" /><label for="remove_background"> Remove image</label></p></td>'."\n";
+			if (!empty($row->background)) echo '<p><input type="checkbox" name="remove_background" id="remove_background" value="1" /><label for="remove_background"> '.lang('dashboard.remove_image').'</label></p></td>'."\n";
 			echo '<td>';
 			echo '</td>'."\n";
 			echo "</tr>\n";
 			// Thumbnail
 			echo '<tr typeof="books">';
-			echo '<td><p>Thumbnail image</p></td>'."\n";
+			echo '<td><p>'.lang('dashboard.thumbnail_image').'</p></td>'."\n";
 			echo '<td style="vertical-align:middle;">';
 			if (!empty($row->thumbnail)) {
 				echo '<input type="hidden" name="thumbnail" value="'.$row->thumbnail.'" />';
 				echo '<img src="'.abs_url($row->thumbnail, "/{$row->slug}").'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" /> ';
                 echo '<b>'.$row->thumbnail."</b>\n";
 			}
-			echo '<p>Upload image: <input type="file" name="upload_thumb" />';
-			echo '<br /><span style="font-size:smaller;">JPG, PNG, or GIF format; will be resized to 120px</span></p>';
-			if (!empty($row->thumbnail)) echo '<p><input type="checkbox" name="remove_thumbnail" id="remove_thumbnail" value="1" /><label for="remove_thumbnail"> Remove image</label></p>';
+			echo '<p>'.lang('dashboard.upload_image').': <input type="file" name="upload_thumb" />';
+			echo '<br /><span style="font-size:smaller;">'.lang('dashboard.upload_thumb_info').'</span></p>';
+			if (!empty($row->thumbnail)) echo '<p><input type="checkbox" name="remove_thumbnail" id="remove_thumbnail" value="1" /><label for="remove_thumbnail"> '.lang('dashboard.remove_image').'</label></p>';
 			echo '</td>'."\n";
 			echo '<td>';
 			echo '</td>'."\n";
 			echo "</tr>\n";
 			// Custom style
 			echo '<tr typeof="books">';
-			echo '<td style="width:190px;">Custom style';
-			echo '<br /><small>Example:<br /><span style="color:#333333;">body {font-family:Helvetica;}<br />No &lt;style&gt; or &lt;/style&gt; tags</span></small>';
+			echo '<td style="width:190px;">'.lang('dashboard.custom_style');
+			echo '<br /><small>'.lang('dashboard.example').':<br /><span style="color:#333333;">'.lang('dashboard.example_css').'</span></small>';
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
 			echo '<textarea name="custom_style" style="width:100%;height:120px;">';
@@ -461,25 +461,25 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Custom javascript
 			echo '<tr typeof="books">';
-			echo '<td style="width:190px;">Custom JavaScript';
-			echo '<br /><small>E.g., Google Analytics code<br />No &lt;script&gt; or &lt;/script&gt; tags</small>';
+			echo '<td style="width:190px;">'.lang('dashboard.custom_javascript');
+			echo '<br /><small>'.lang('dashboard.example_javascript').'</small>';
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" class="row_div" colspan="2">';
 			echo '<textarea name="custom_js" style="width:100%;height:120px;">';
 			echo (!empty($row->custom_js)) ? trim($row->custom_js) : '';
 			echo '</textarea>'."\n";
-			echo '<div class="predefined_wrapper">Visit the <a href="http://scalar.usc.edu/works/guide2" target="_blank">Scalar 2 Guide</a> for <a href="http://scalar.usc.edu/works/guide2/advanced-topics" target="_blank">example Javascript snippets</a> including one for <a href="http://scalar.usc.edu/works/guide2/revealing-individual-authors-in-page-headers" target="_blank">revealing individual page authors</a>.</div>'."\n";
+			echo '<div class="predefined_wrapper">'.lang('dashboard.custom_javascript_note').'</div>'."\n";
 			echo "</td>\n";
 			echo "</tr>\n";
 			// Scope
 			echo '<tr typeof="books" class="styling_sub">';
-			echo '<td><h4 class="content_title">Publisher</h4></td><td></td>';
+			echo '<td><h4 class="content_title">'.lang('dashboard.publisher').'</h4></td><td></td>';
 			echo '</tr>';
 			echo '<tr>';
-			echo '<td style="vertical-align:middle;">Scope';
+			echo '<td style="vertical-align:middle;">'.lang('dashboard.scope');
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
-			echo 'Select scope: <select name="scope">';
+			echo lang('dashboard.select_scope').': <select name="scope">';
 			echo '<option value="book"'.(($row->scope=='book')?' SELECTED':'').'>Book</option>';
 			echo '<option value="article"'.(($row->scope=='article')?' SELECTED':'').'>Article</option>';
 			echo '<option value="project"'.(($row->scope=='project')?' SELECTED':'').'>Project</option>';
@@ -488,7 +488,7 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Publisher
 			echo '<tr>';
-			echo '<td style="vertical-align:middle;">Publisher name<br /><small>Include HTML <b>'.htmlspecialchars('<a>').'</b> to create link</small>';
+			echo '<td style="vertical-align:middle;">'.lang('dashboard.publisher_name').'<br /><small>'.lang('dashboard.publisher_name_note').'</small>';
 			echo '</td>'."\n";
 			echo '<td style="vertical-align:middle;" colspan="2">';
 			echo '<input name="publisher" type="text" value="'.htmlspecialchars($row->publisher).'" style="width:100%;" />';
@@ -496,15 +496,15 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Publisher icon
 			echo '<tr>';
-			echo '<td><p>Publisher logo<br /><small><b>'.htmlspecialchars('<a>').'</b> in previous field makes link</p></td>'."\n";
+			echo '<td><p>'.lang('dashboard.publisher_logo').'<br /><small>'.lang('dashboard.publisher_logo_note').'</small></p></td>'."\n";
 			echo '<td style="vertical-align:middle;">';
 			if (!empty($row->publisher_thumbnail)) {
 				echo '<input type="hidden" name="publisher_thumbnail" value="'.$row->publisher_thumbnail.'" />';
 				echo '<img src="'.abs_url($row->publisher_thumbnail, "/{$row->slug}").'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" />';
 				echo '<b>'.$row->publisher_thumbnail.'</b>';
 			}
-			echo '<p>Upload image: <input type="file" name="upload_publisher_thumb" /><br /><span style="font-size:smaller;">JPG, PNG, or GIF format; will be resized to 120px</span></p>'."\n";
-			if (!empty($row->publisher_thumbnail)) echo '<p><input type="checkbox" name="remove_publisher_thumbnail" value="1" /> Remove image</p>';
+			echo '<p>'.lang('dashboard.upload_image').': <input type="file" name="upload_publisher_thumb" /><br /><span style="font-size:smaller;">'.lang('dashboard.upload_thumb_info').'</span></p>'."\n";
+			if (!empty($row->publisher_thumbnail)) echo '<p><input type="checkbox" name="remove_publisher_thumbnail" value="1" /> '.lang('dashboard.remove_image').'</p>';
 			echo '</td>'."\n";
 			echo "</tr>\n";
 			// Taxonomy Search
@@ -524,7 +524,7 @@ function make_taxonomy_pages(onomy) {
 			echo "</tr>\n";
 			// Saves
 			echo "<tr>\n";
-			echo '<td style="padding-top:8px;text-align:right;" colspan="3"><span class="save_changes">You have unsaved changes.</span> &nbsp; <a class="generic_button large default" href="javascript:;">Save</a></td>';
+			echo '<td style="padding-top:8px;text-align:right;" colspan="3"><span class="save_changes">'.lang('dashboard.unsaved_changes').'</span> &nbsp; <a class="generic_button large default" href="javascript:;">'.lang('dashboard.save').'</a></td>';
 			echo "</tr>\n";
 		endif;
 ?>

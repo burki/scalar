@@ -23,10 +23,10 @@
 		function add_book_user(book_id) {
 			if ('undefined'==typeof(book_id) || book_id==0) return alert('Please select a book');
 			var prev_text = $('#connect_book_user_link').html();
-			//$('#connect_book_user_link').html('Loading...');
+			//$('#connect_book_user_link').html('<?=lang('dashboard.loading')?>');
 			$.get('api/get_system_users', function(data) {
 				$('.select_box').remove();
-				var $div = $('<div class="select_box"><h4 class="dialog_title">Add a user (admin)</h4>Connect a user by clicking their name below<br />(New accounts are added by system administrators)<br clear="both" /><br /><div id="user_list" style="height:200px;overflow:auto;line-height:150%;"></div><br /><a class="generic_button large" href="javascript:;" onclick="$(this).parent().remove();" style="float:right;">Cancel</a></div>');
+				var $div = $('<div class="select_box"><h4 class="dialog_title">Add a user (admin)</h4>Connect a user by clicking their name below<br />(New accounts are added by system administrators)<br clear="both" /><br /><div id="user_list" style="height:200px;overflow:auto;line-height:150%;"></div><br /><a class="generic_button large" href="javascript:;" onclick="$(this).parent().remove();" style="float:right;"><?=lang('dashboard.cancel')?></a></div>');
 				$('body').append($div);
 				$user_list = $div.find('#user_list');
 				for (var j = 0; j < data.length; j++) {
@@ -56,20 +56,20 @@
 			});
 		}
 		function request_book_user(book_id) {
-				var $div = $('<div class="select_box"><h4 class="dialog_title">Add a user</h4>To connect a user to your book, first search for them by their full name.<br clear="both" /><br /><form><input class="generic_text_input" style="float:left;" type="text" name="fullname" value="Full name" /><input class="generic_button" style="float:left; margin-left:8px;" type="submit" value="Search" /><br clear="both" /></form><div class="results" style="padding-top:16px;padding-bottom:10px;"></div><a class="generic_button large" href="javascript:;" onclick="$(this).parent().remove();" style="float:right;font-size:larger;">Cancel</a></div>');
+				var $div = $('<div class="select_box"><h4 class="dialog_title"><?=lang('dashboard.add_user')?></h4><?=lang('dashboard.add_user_note')?><br clear="both" /><br /><form><input class="generic_text_input" style="float:left;" type="text" name="fullname" value="<?=lang('dashboard.full_name')?>" /><input class="generic_button" style="float:left; margin-left:8px;" type="submit" value="<?=lang('dashboard.search')?>" /><br clear="both" /></form><div class="results" style="padding-top:16px;padding-bottom:10px;"></div><a class="generic_button large" href="javascript:;" onclick="$(this).parent().remove();" style="float:right;font-size:larger;"><?=lang('dashboard.cancel')?></a></div>');
 				$div.find('input:first').focus(function() {if ($(this).val() == 'Full name') $(this).val('');});
 				$('body').append($div);
 				$div.find('form:first').submit(function() {
-					if ($div.find('input:first').val()=='Full name') return false;
+					if ($div.find('input:first').val()=='<?=lang('dashboard.full_name')?>') return false;
 					$div.find('input:submit').attr("disabled", "disabled");
 					var fullname = this.fullname.value;
 					$.get('api/user_search', {fullname:fullname}, function(data) {
 						if (!data.length) {
-							$div.find('.results').html('No users were found with the provided full name');
+							$div.find('.results').html('<?=lang('dashboard.no_users_found')?>');
 							$div.find('input:submit').removeAttr("disabled");
 							return false;
 						}
-						$div.find('.results').html('<div style="padding-bottom:10px;">Please select a user below to link them to your book:</div>');
+						$div.find('.results').html('<div style="padding-bottom:10px;"><?=lang('dashboard.add_user_select')?>:</div>');
 						for (var j = 0; j < data.length; j++) {
 							var $link = $('<a href="javascript:void(null);">'+data[j].fullname+'</a>');
 							$link.data('user_id', data[j].user_id);
@@ -110,14 +110,14 @@
 			// Get contributions
 			if (!$the_link.data('is_open')) {
 				$the_link.blur();
-				$the_link.html('Loading...');
+				$the_link.html('<?=lang('dashboard.loading')?>');
 				$the_link.data('is_open',true);
 				var $the_row = $('#user_row_'+user_id)
 				$.get('api/get_user_contributions', {book_id:book_id,user_id:user_id}, function(data) {
 					var $next = $the_link.parent().parent().next();
 					if ($next.hasClass('version_wrapper')) $next.remove();
 					if (data.length == 0) {
-						$the_row.after('<tr class="version_wrapper"><td>&nbsp;</td><td class="odd" colspan="8">No contributions found</td></tr>');
+						$the_row.after('<tr class="version_wrapper"><td>&nbsp;</td><td class="odd" colspan="8"><?=lang('dashboard.no_contributions')?></td></tr>');
 					} else {
 					   	var $row = $('<tr class="version_wrapper"><td colspan="9" style="padding:0px 0px 0px 0px;"><table style="width:100%;" cellspacing="0" cellpadding="0"></table></td></tr>');
 					   	var $header = ('<tr><th>ID</th><th>Version</th><th>Title</th><th>Description</th><th>Content</th><th>User</th><th>Created</th></tr>');
@@ -139,7 +139,7 @@
 					    	}
 					    }
 					}
-					$the_link.html('Hide');
+					$the_link.html('<?=lang('dashboard.hide')?>');
 				});
 			// Remove versions
 			} else {
@@ -147,14 +147,14 @@
 				if ($next.hasClass('version_wrapper')) $next.remove();
 				$the_link.data('is_open',false);
 				$the_link.blur();
-				$the_link.html('View');
+				$the_link.html('<?=lang('dashboard.view')?>');
 			}
 
 		}
 		</script>
 <?
 	if (empty($book)):
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	else:
 ?>
 		<div class="table_wrapper">
@@ -163,13 +163,13 @@
 			<tr class="head">
 				<th></th>
 				<th>ID</th>
-				<th>Relationship</th>
-				<th>In index</th>
-				<th>Order</th>
-				<th>Full name</th>
-				<th>Email</th>
-				<th>URL</th>
-				<th>Contributions</th>
+				<th><?=lang('dashboard.relationship')?></th>
+				<th><?=lang('dashboard.in_index')?></th>
+				<th><?=lang('dashboard.order')?></th>
+				<th><?=lang('dashboard.full_name')?></th>
+				<th><?=lang('dashboard.email')?></th>
+				<th><?=lang('dashboard.url')?></th>
+				<th><?=lang('dashboard.contributions')?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -177,7 +177,7 @@
 			$count = 1;
 			foreach ($current_book_users as $row) {
 				echo '<tr typeof="user_books" id="user_row_'.$row->user_id.'">';
-				echo '<td style="white-space:nowrap;"><a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">Edit</a> <a href="javascript:remove_book_user('.@$book->book_id.','.$row->user_id.');" style="color: rgb(136, 136, 136);" onclick="return confirm(\'Are you sure you wish to REMOVE the connection to '.htmlspecialchars($row->fullname,ENT_QUOTES).'?\');" class="generic_button">Remove</a></td>'."\n";
+				echo '<td style="white-space:nowrap;"><a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">'.lang('dashboard.edit').'</a> <a href="javascript:remove_book_user('.@$book->book_id.','.$row->user_id.');" style="color: rgb(136, 136, 136);" onclick="return confirm(\''.sprintf(lang('dashboard.remove_user_confirm'), htmlspecialchars($row->fullname,ENT_QUOTES)).'\');" class="generic_button">'.lang('dashboard.remove').'</a></td>'."\n";
 				echo '<td property="id">'.$row->user_id."</td>\n";
 				echo '<td class="editable enum {\''.implode("','",$relationships).'\'}" property="relationship">'.$row->relationship."</td>\n";
 				echo '<td class="editable boolean" property="list_in_index">'.$row->list_in_index."</td>\n";
@@ -185,7 +185,7 @@
 				echo '<td property="fullname">'.$row->fullname."</td>\n";
 				echo '<td property="email">'.$row->email."</td>\n";
 				echo '<td property="url">'.((!empty($row->url))?'<a href="'.$row->url.'" target="_blank">':'').$row->url.((!empty($row->url))?'</a>':'')."</td>\n";
-				echo '<td style="white-space:nowrap;text-align:center;"><a href="javascript:;" class="generic_button" onclick="user_get_contributions('.$row->user_id.',this);">View</a></td>'."\n";
+				echo '<td style="white-space:nowrap;text-align:center;"><a href="javascript:;" class="generic_button" onclick="user_get_contributions('.$row->user_id.',this);">'.lang('dashboard.view').'</a></td>'."\n";
 				echo "</tr>\n";
 				$count++;
 			}
@@ -198,6 +198,6 @@
 			<? if (!empty($book) && $login_is_super): ?>
 			<a class="generic_button large" title="Super admin feature" href="javascript:void(null);" onclick="add_book_user(<?=$book->book_id?>);" id="connect_book_user_link">Add a user (admin)</a>
 			<? endif ?>
-			<a class="generic_button large" href="javascript:void(null);" onclick="request_book_user(<?=$book->book_id?>)" id="request_book_user_link">Add a user</a>
+			<a class="generic_button large" href="javascript:void(null);" onclick="request_book_user(<?=$book->book_id?>)" id="request_book_user_link"><?=lang('dashboard.add_user')?></a>
 		</div>
 <? endif ?>

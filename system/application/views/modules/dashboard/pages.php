@@ -5,7 +5,7 @@
 <?$this->template->add_js('system/application/views/modules/dashboard/jquery.dashboardtable.js')?>
 <?
 	if (empty($book)):
-		echo 'Please select a book to manage using the pulldown menu above';
+		echo lang('dashboard.select_book_note');
 	else:
 ?>
 
@@ -43,8 +43,8 @@
    				$('.table_wrapper').html('<div id="loading">Loading</div>');
    	   			var sq = $(this).find('input[name="sq"]').val().toLowerCase();
    	   			var s_all = ($(this).find('input[name="s_all"][value="1"]').is(':checked')) ? 1 : null;
-   	   			if (!sq.length || 'Search for a page'.toLowerCase()==sq) {
-					alert('Please enter a search query');
+   	   			if (!sq.length || '<?=lang('dashboard.search_page')?>'.toLowerCase()==sq) {
+					alert('<?=lang('dashboard.search_empty')?>');
 					return false;
    	   			}
    	   			$('.table_wrapper:first').scalardashboardtable('search', {query_type:'page',sq:sq,s_all:s_all,start:start,results:results,book_uri:book_uri,resize_wrapper_func:resizeList,tablesorter_func:tableSorter,pagination_func:pagination,paywall:paywall});
@@ -54,7 +54,7 @@
    			$('#formSearch').find('a').click(function() {
    	   			start = 0;
    				$('.table_wrapper').html('<div id="loading">Loading</div>');
-				$(this).parent().find('input:first').val('Search for a page');
+				$(this).parent().find('input:first').val('<?=lang('dashboard.search_page')?>');
 				$('.table_wrapper:first').scalardashboardtable('paginate', {query_type:'page',start:start,results:results,book_uri:book_uri,resize_wrapper_func:resizeList,tablesorter_func:tableSorter,pagination_func:pagination,paywall:paywall});
    			});
 
@@ -311,11 +311,11 @@
 
 		</script>
 
-		<a href="<?=confirm_slash(base_url()).confirm_slash($book->slug)?>new.edit" style="float:right;font-size:11px !important;" class="generic_button">Create new page</a>
+		<a href="<?=confirm_slash(base_url()).confirm_slash($book->slug)?>new.edit" style="float:right;font-size:11px !important;" class="generic_button"><?=lang('dashboard.create_page')?></a>
 
 		<form style="float:left;" id="formSearch">
-		<input type="text" name="sq" style="width:300px;float:left;margin-right:3px;" class="generic_text_input" value="Search for a page" onmousedown="if (this.value=='Search for a page') this.value='';" />
-		<input type="submit" value="Go" class="generic_button" />&nbsp; <a href="javascript:;">clear</a>&nbsp;
+		<input type="text" name="sq" style="width:300px;float:left;margin-right:3px;" class="generic_text_input" value="<?=lang('dashboard.search_page')?>" onmousedown="if (this.value=='<?=lang('dashboard.search_page')?>') this.value='';" />
+		<input type="submit" value="<?=lang('dashboard.go')?>" class="generic_button" />&nbsp; <a href="javascript:;"><?=lang('dashboard.clear')?></a>&nbsp;
 		<? if (count($current_book_content)): ?>
 		&nbsp; <span class="prev"></span>&nbsp; <span class="pagination"></span> <b class="total"><?=count($current_book_content)?></b> result<?=($current_book_content>1)?'s':''?> &nbsp;<span class="next"></span>
 		&nbsp; &nbsp;<div class="search_metadata">Search: <label for="s_not_all"><input type="radio" id="s_not_all" name="s_all" value="0" checked /> title &amp; description (fast)</label> &nbsp;<label for="s_all"><input type="radio" id="s_all" name="s_all" value="1" /> all fields &amp; metadata (slow)</label></div>
@@ -329,14 +329,14 @@
 		<br />
 
 		<form onsubmit="deleteContent();return false;">
-		<input type="submit" value="Delete selected content" class="generic_button" />
+		<input type="submit" value="<?=lang('dashboard.delete_content')?>" class="generic_button" />
 		&nbsp; &nbsp;
-		<span style="white-space:nowrap;"><input id="check_all" type="checkbox" /><label for="check_all"> Check all</label></span>
+		<span style="white-space:nowrap;"><input id="check_all" type="checkbox" /><label for="check_all"> <?=lang('dashboard.check_all')?></label></span>
 		&nbsp; &nbsp;
 		<span style="white-space:nowrap;"><span class="prev"></span>&nbsp; <span class="pagination"></span> <b class="total"><?=count($current_book_content)?></b> result<?=($current_book_content>1)?'s':''?> &nbsp;<span class="next"></span></span>
 		&nbsp; &nbsp;
-		<span style="white-space:nowrap;">Jump to: <select name="jump_to"><option value=""></option></select> of  <b><?=count($current_book_content)?></b> result<?=($current_book_content>1)?'s':''?></span>
+		<span style="white-space:nowrap;"><?=lang('dashboard.jump_to')?>: <select name="jump_to"><option value=""></option></select> <?=lang('dashboard.of')?> <b><?=count($current_book_content)?></b> result<?=($current_book_content>1)?'s':''?></span>
 		&nbsp; &nbsp;
-		<span style="white-space:nowrap;">Show: <select name="num_results"></select> at a time</span>
+		<span style="white-space:nowrap;"><?=lang('dashboard.show')?>: <select name="num_results"></select> <?=lang('dashboard.at_a_time')?></span>
 		</form>
 <? endif ?>
