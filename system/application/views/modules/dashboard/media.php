@@ -109,7 +109,7 @@
 				var next = (start+results < total) ? start+results : total;
 				var _prev = (start - results > 0) ? start - results : 0;
 				var _next = (start + results < total) ? start + results : total;
-				$('.pagination').html('<b>'+(prev+1)+'</b> - <b>'+(next)+'</b> of ');
+				$('.pagination').html('<b>'+(prev+1)+'</b> - <b>'+(next)+'</b> <?=lang('dashboard.of')?> ');
 				var $prev = $('<a href="javascript:;">'+((prev>0)?'Previous':'')+'</a>').appendTo('.prev');
 				var $next = $('<a href="javascript:;">'+((next<total)?'Next':'')+'</a>').appendTo('.next');
 				$prev.click(function() {
@@ -295,7 +295,7 @@
 			<?=lang('dashboard.import_pages')?>:&nbsp;
 			<select id="selectImportPages" class="generic_text_input">
 				<option value="">&nbsp;</option>
-				<optgroup label="Affiliated archives">
+				<optgroup label="<?=lang('dashboard.affiliated_archives')?>">
 					<option value="<?=$url_base?>import/critical_commons">Critical Commons</option>
 					<option value="<?=$url_base?>import/cuban_theater_digital_archive">Cuban Theater Digital Archive</option>
 					<option value="<?=$url_base?>import/hemispheric_institute">Hemispheric Institute</option>
@@ -303,15 +303,15 @@
 					<option value="<?=$url_base?>import/shoah_foundation_vha_online">VHA Online</option>
 					<option value="<?=$url_base?>import/shoah_foundation_vha">VHA</option>
 				</optgroup>
-				<optgroup label="Other archives">
+				<optgroup label="<?=lang('dashboard.other_archives')?>">
 					<option value="<?=$url_base?>import/the_metropolitan_museum_of_art">The Metropolitan Museum of Art</option>
 					<option value="<?=$url_base?>import/omeka">Omeka sites</option>
 					<option value="<?=$url_base?>import/soundcloud">SoundCloud</option>
 					<option value="<?=$url_base?>import/vimeo">Vimeo</option>
 					<option value="<?=$url_base?>import/youtube">YouTube</option>
 				</optgroup>
-				<optgroup label="Files, URLs">
-					<option value="<?=$url_base?>upload">Upload file</option>
+				<optgroup label="<?=lang('dashboard.files_urls')?>">
+					<option value="<?=$url_base?>upload"><?=lang('dashboard.upload_file')?></option>
 					<option value="<?=$url_base?>new.edit#type=media">Internet URL</option>
 				</optgroup>
 			</select>
@@ -320,7 +320,7 @@
 
 		<br clear="both" /><br />
 
-		<div class="table_wrapper"><div id="loading">Loading</div></div>
+		<div class="table_wrapper"><div id="loading"><?=lang('dashboard.loading')?></div></div>
 
 		<br />
 

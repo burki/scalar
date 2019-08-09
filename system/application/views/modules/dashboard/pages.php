@@ -9,8 +9,8 @@
 	else:
 ?>
 
-	<div id="slug-change-confirm" title="URI change">
-	Changing the URI of a page will change its location on the web, which will make its old URL unavailable. Do you wish to continue?
+	<div id="slug-change-confirm" title="<?=lang('dashboard.uri_change')?>">
+	<?=lang('dashboard.uri_change_note')?>
 	</div>
 
 	<script>

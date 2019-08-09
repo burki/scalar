@@ -439,7 +439,7 @@ function make_taxonomy_pages(onomy) {
 			echo '<td style="vertical-align:middle;">';
 			if (!empty($row->thumbnail)) {
 				echo '<input type="hidden" name="thumbnail" value="'.$row->thumbnail.'" />';
-				echo '<img src="'.abs_url($row->thumbnail, "/{$row->slug}").'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" /> ';
+				echo '<img src="'.abs_url($row->thumbnail, confirm_slash(base_url())."{$row->slug}").'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" /> ';
                 echo '<b>'.$row->thumbnail."</b>\n";
 			}
 			echo '<p>'.lang('dashboard.upload_image').': <input type="file" name="upload_thumb" />';
@@ -500,7 +500,7 @@ function make_taxonomy_pages(onomy) {
 			echo '<td style="vertical-align:middle;">';
 			if (!empty($row->publisher_thumbnail)) {
 				echo '<input type="hidden" name="publisher_thumbnail" value="'.$row->publisher_thumbnail.'" />';
-				echo '<img src="'.abs_url($row->publisher_thumbnail, "/{$row->slug}").'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" />';
+				echo '<img src="'.abs_url($row->publisher_thumbnail, confirm_slash(base_url()).$row->slug).'?t='.time().'" style="vertical-align:middle;margin-right:10px;border:solid 1px #aaaaaa;" />';
 				echo '<b>'.$row->publisher_thumbnail.'</b>';
 			}
 			echo '<p>'.lang('dashboard.upload_image').': <input type="file" name="upload_publisher_thumb" /><br /><span style="font-size:smaller;">'.lang('dashboard.upload_thumb_info').'</span></p>'."\n";

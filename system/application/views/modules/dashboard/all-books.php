@@ -114,7 +114,7 @@
 		</script>
 
 		<? if (isset($_GET['error']) && $_GET['error']==1): ?>
-		<div class="error" style="max-width:none; margin-bottom:16px;">Title is a required field<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-books#tabs-all-books">clear</a></div>
+		<div class="error" style="max-width:none; margin-bottom:16px;"><?=lang('dashboard.title_required')?><a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-books#tabs-all-books"><?=lang('dashboard.clear')?></a></div>
 		<? endif; ?>
 		<? if (isset($_REQUEST['action']) && 'deleted'==$_REQUEST['action']): ?>
 		<div class="saved" style="max-width:none; margin-bottom:16px;">
@@ -132,16 +132,16 @@
 		<form style="margin:10px 0px 18px 0px; white-space:nowrap;" action="<?=confirm_slash(base_url())?>system/dashboard#tabs-all-books" method="post">
 		<input type="hidden" name="zone" value="all-books" />
 		<input type="hidden" name="action" value="do_add_book" />
-		<span style="float:left; margin-right:6px;">Add new book:</span>
-		<input type="text" name="title" value="" placeholder="Title" style="width:200px;float:left;" />
-		<input type="text" name="subtitle" value="" placeholder="Subtitle" style="width:200px;float:left;margin-left:8px;" />
+		<span style="float:left; margin-right:6px;"><?=lang('dashboard.add_new_book')?>:</span>
+		<input type="text" name="title" value="" placeholder="<?=lang('dashboard.book_title')?>" style="width:200px;float:left;" />
+		<input type="text" name="subtitle" value="" placeholder="<?=lang('dashboard.book_subtitle')?>" style="width:200px;float:left;margin-left:8px;" />
 		<select name="user_id" style="font-size:12px; float:left; margin-left:8px; margin-right:8px; padding-top:1px; padding-bottom:0px; max-width:200px;">
-			<option value="0">Initial author</option>
+			<option value="0"><?=lang('dashboard.initial_author')?></option>
 		<? foreach ($users as $user): ?>
 			<option value="<?=$user->user_id?>"><?=$user->fullname?></option>
 		<? endforeach ?>
 		</select>
-		<input type="submit" value="Add" style="padding:3px 8px 1px 8px !important; float:left;" class="generic_button default" />
+		<input type="submit" value="<?=lang('dashboard.add')?>" style="padding:3px 8px 1px 8px !important; float:left;" class="generic_button default" />
 		<br clear="both" />
 		</form>
 
@@ -152,15 +152,15 @@
 					<th></th>
 					<th style="display:none;">ID</th>
 					<th style="display:none;">Book Id</th>
-					<th style="white-space:nowrap;">Title</th>
-					<th style="white-space:nowrap;">Subtitle</th>
-					<!--<th style="white-space:nowrap;">Description</th>-->
+					<th style="white-space:nowrap;"><?=lang('dashboard.book_title')?></th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.book_subtitle')?></th>
+					<!--<th style="white-space:nowrap;"><?=lang('dashboard.book_description')?></th>-->
 					<th style="white-space:nowrap;">URI</th>
-					<th style="white-space:nowrap;">Public</th>
-					<th style="white-space:nowrap;">In index</th>
-					<th style="white-space:nowrap;">Featured</th>
-					<th style="white-space:nowrap;">Contributors</th>
-					<th style="white-space:nowrap;">Created</th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.public')?></th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.in_index')?></th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.featured')?></th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.contributors')?></th>
+					<th style="white-space:nowrap;"><?=lang('dashboard.created')?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -172,9 +172,9 @@
 				if (strlen($books[$i]->description) == strlen($desc_excerpt)) $desc_excerpt = null;
 				echo '<tr class="bottom_border" typeof="books">';
 				echo '<td style="white-space:nowrap;">';
-				echo '<a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">Edit</a> ';
+				echo '<a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">'.lang('dashboard.edit').'</a> ';
 				echo '<a href="javascript:;" onclick="window.location.href=\''.confirm_slash(base_url()).'system/dashboard?book_id='.$books[$i]->book_id.'&zone=style#tabs-style\';" class="generic_button">Dashboard</a> ';
-				echo '<a style="color:#888888;" href="'.confirm_slash(base_url()).'system/dashboard?action=do_delete&delete='.$books[$i]->book_id.'&type=books&zone=all-books#tabs-all-books" onclick="if (!confirm(\'Are you sure you wish to DELETE this book and all associated content?\')) return false;" class="generic_button">Remove</a>';
+				echo '<a style="color:#888888;" href="'.confirm_slash(base_url()).'system/dashboard?action=do_delete&delete='.$books[$i]->book_id.'&type=books&zone=all-books#tabs-all-books" onclick="if (!confirm(\'Are you sure you wish to DELETE this book and all associated content?\')) return false;" class="generic_button">'.lang('dashboard.remove').'</a>';
 				echo '</td>'."\n";
 				echo '<td property="id" style="display:none;">'.$books[$i]->book_id."</td>\n";
 				echo '<td property="book_id" style="display:none;">'.$books[$i]->book_id."</td>\n";
@@ -195,7 +195,7 @@
 					if ($user->list_in_index) echo ' <span style="color:red;font-weight:bold">*</span>';
 					echo '<br />';
 				}
-				echo '<p><a href="javascript:;" class="value_select_trigger multiple generic_button" resource="get_system_users" rel="save_book_users" style="white-space:nowrap;">Edit users</a></p>';
+				echo '<p><a href="javascript:;" class="value_select_trigger multiple generic_button" resource="get_system_users" rel="save_book_users" style="white-space:nowrap;">'.lang('dashboard.edit_users').'</a></p>';
 				echo "</td>\n";
 				echo '<td style="white-space:nowrap;">'.date( 'M j, Y', strtotime($books[$i]->created) )."</td>\n";
 				echo "</tr>\n";
@@ -229,9 +229,9 @@
 		 &nbsp; &nbsp; &nbsp; &nbsp;
 		<? endif ?>
 		<form class="book-search-form">
-		 	<input placeholder="Search for a book" type="text" class="book-search" size="20" />
-			<input type="submit" value="Search" class="generic_button" style="padding:3px 8px 1px 8px !important; vertical-align:top;" />
+		 	<input placeholder="<?=lang('dashboard.search_book')?>" type="text" class="book-search" size="20" />
+			<input type="submit" value="<?=lang('dashboard.search')?>" class="generic_button" style="padding:3px 8px 1px 8px !important; vertical-align:top;" />
 			<?=(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])) ? ' &nbsp; Showing book ID '.$_REQUEST['id'].' &nbsp; ' : ''?>
-			<a href="<?=confirm_slash(base_url())?>system/dashboard?zone=all-books&amp;start=<?=$start?>&amp;total=<?=$total?>#tabs-all-books">clear</a>
+			<a href="<?=confirm_slash(base_url())?>system/dashboard?zone=all-books&amp;start=<?=$start?>&amp;total=<?=$total?>#tabs-all-books"><?=lang('dashboard.clear')?></a>
 		 </form>
 		</div>

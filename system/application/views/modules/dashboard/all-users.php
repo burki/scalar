@@ -52,21 +52,21 @@
 			if (book_title.val() == 'title of first book (optional)') book_title.val('');
 		}
 		</script>
-		
+
 		<? if (isset($_GET['error']) && $_GET['error']==1): ?>
-		<div class="error" style="max-width:none; margin-bottom:16px;">You left out a required field<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users">clear</a></div>
+		<div class="error" style="max-width:none; margin-bottom:16px;">You left out a required field<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users"><?= lang('dashboard.clear') ?></a></div>
 		<? endif; ?>
 		<? if (isset($_GET['error']) && $_GET['error']==2): ?>
-		<div class="error" style="max-width:none; margin-bottom:16px;">Password and Retype password did not match<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users">clear</a></div>
+		<div class="error" style="max-width:none; margin-bottom:16px;">Password and Retype password did not match<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users"><?= lang('dashboard.clear') ?></a></div>
 		<? endif; ?>
 		<? if (isset($_GET['error']) && $_GET['error']==3): ?>
-		<div class="error" style="max-width:none; margin-bottom:16px;">A user with that email address already exists<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users">clear</a></div>
+		<div class="error" style="max-width:none; margin-bottom:16px;">A user with that email address already exists<a style="float:right;" href="?book_id=<?=((isset($book->book_id))?$book->book_id:0)?>&zone=all-users#tabs-all-users"><?= lang('dashboard.clear') ?></a></div>
 		<? endif; ?>
 		<? if (isset($_REQUEST['action']) && 'deleted'==$_REQUEST['action']): ?>
-		<div class="saved" style="max-width:none; margin-bottom:16px;">User has been deleted<a style="float:right;" href="?zone=all-users#tabs-all-users">clear</a></div>
+		<div class="saved" style="max-width:none; margin-bottom:16px;">User has been deleted<a style="float:right;" href="?zone=all-users#tabs-all-users"><?= lang('dashboard.clear') ?></a></div>
 		<? endif ?>
 		<? if (isset($_REQUEST['action']) && 'added'==$_REQUEST['action']): ?>
-		<div class="saved" style="max-width:none; margin-bottom:16px;">User has been added and is present in the list below<a style="float:right;" href="?zone=all-users#tabs-all-users">clear</a></div>
+		<div class="saved" style="max-width:none; margin-bottom:16px;"><?= lang('dashboard.user_added') ?><a style="float:right;" href="?zone=all-users#tabs-all-users"><?= lang('dashboard.clear') ?></a></div>
 		<? endif ?>
 
 		<form style="margin:10px 0px 18px 0px; white-space:nowrap;" action="<?=confirm_slash(base_url())?>system/dashboard#tabs-all-users" method="post" onsubmit="checkAddUserForm(this);">
@@ -77,12 +77,12 @@
 		<? else: ?>
 		<span style="padding-left:20px; padding-top:2px; float:right; color:#777777;">No registration key</span>
 		<? endif; ?>
-		Add new user: 
-		<input tabindex="1" type="text" name="email" value="" placeholder="Email address" style="width:170px;" />&nbsp;
-		<input tabindex="2" type="text" name="fullname" value="" placeholder="Full name" style="width:170px;" />&nbsp;
-		<input tabindex="3" type="password" name="password_1" value="" placeholder="Password" style="width:170px;" />&nbsp;
-		<input tabindex="4" type="password" name="password_2" value="" placeholder="Retype password" style="width:170px;" />&nbsp;
-		<input tabindex="5" style="padding:3px 8px 1px 8px !important" type="submit" value="Add" class="generic_button default" />
+		<?= lang('dashboard.add_new_user')?>:
+		<input tabindex="1" type="text" name="email" value="" placeholder="<?= lang('dashboard.email_address') ?>" style="width:170px;" />&nbsp;
+		<input tabindex="2" type="text" name="fullname" value="" placeholder="<?= lang('dashboard.full_name') ?>" style="width:170px;" />&nbsp;
+		<input tabindex="3" type="password" name="password_1" value="" placeholder="<?= lang('dashboard.password') ?>" style="width:170px;" />&nbsp;
+		<input tabindex="4" type="password" name="password_2" value="" placeholder="<?= lang('dashboard.retype_password') ?>" style="width:170px;" />&nbsp;
+		<input tabindex="5" style="padding:3px 8px 1px 8px !important" type="submit" value="<?= lang('dashboard.add') ?>" class="generic_button default" />
 		</form>
 
 		<div class="table_wrapper">
@@ -91,11 +91,11 @@
 				<tr class="head">
 					<th></th>
 					<th style="display:none;"></th>
-					<th>Full name</th>
-					<th>Email</th>
-					<th>Password</th>
-					<th>URL</th>
-					<th>Books</th>
+					<th><?= lang('dashboard.full_name') ?></th>
+					<th><?= lang('dashboard.email') ?></th>
+					<th><?= lang('dashboard.password') ?></th>
+					<th><?= lang('dashboard.url') ?></th>
+					<th><?= lang('dashboard.books') ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -107,7 +107,7 @@
 				$count = count($users)-1;
 			for ($i=0;$i<$count;$i++) {
 				echo '<tr class="bottom_border" typeof="users">';
-				echo '<td style="white-space:nowrap;"><a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">Edit</a> <a style="color:#888888;" href="'.confirm_slash(base_url()).'system/dashboard?action=do_delete&delete='.$users[$i]->user_id.'&type=users&zone=all-users#tabs-all-users" onclick="if (!confirm(\'Are you sure you wish to DELETE this user?\')) return false;" class="generic_button">Remove</a></td>'."\n";
+				echo '<td style="white-space:nowrap;"><a href="javascript:;" onclick="edit_row($(this).parents(\'tr\'));" class="generic_button">'.lang('dashboard.edit').'</a> <a style="color:#888888;" href="'.confirm_slash(base_url()).'system/dashboard?action=do_delete&delete='.$users[$i]->user_id.'&type=users&zone=all-users#tabs-all-users" onclick="if (!confirm(\'Are you sure you wish to DELETE this user?\')) return false;" class="generic_button">'.lang('dashboard.remove').'</a></td>'."\n";
 				echo '<td property="id" style="display:none;">'.$users[$i]->user_id."</td>\n";
 				echo '<td class="editable" property="fullname">'.$users[$i]->fullname."</td>\n";
 				echo '<td class="editable" property="email">'.$users[$i]->email."</td>\n";
@@ -150,9 +150,9 @@
 		 &nbsp; &nbsp; &nbsp; &nbsp;
 		<? endif ?>
 		<form class="user-search-form">
-		 	<input placeholder="Search for a user" type="text" class="user-search" style="width:170px;" />
-			<input type="submit" value="Search" class="generic_button" style="padding:3px 8px 1px 8px !important; vertical-align:top;"  />
+		 	<input placeholder="<?= lang('dashboard.search_user') ?>" type="text" class="user-search" style="width:170px;" />
+			<input type="submit" value="<?= lang('dashboard.search') ?>" class="generic_button" style="padding:3px 8px 1px 8px !important; vertical-align:top;"  />
 			<?=(isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])) ? ' &nbsp; Showing user ID '.$_REQUEST['id'].' &nbsp; ' : ''?>
-			<a href="<?=confirm_slash(base_url())?>system/dashboard?zone=all-users&amp;start=<?=$start?>&amp;total=<?=$total?>#tabs-all-users">clear</a>
+			<a href="<?=confirm_slash(base_url())?>system/dashboard?zone=all-users&amp;start=<?=$start?>&amp;total=<?=$total?>#tabs-all-users"><?= lang('dashboard.clear') ?></a>
 		 </form>
 		</div>

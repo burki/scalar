@@ -529,7 +529,7 @@ class User_model extends MY_Model {
 		$email =@ $array['email'];
 		if (!empty($email)) {
 			$email_user = $this->get_by_email($email);
-			if (!empty($email_user) && $email_user->user_id != $user_id) throw new Exception('Email already in use');
+			if (!empty($email_user) && $email_user->user_id != $user_id) throw new Exception(lang('register.email_duplicate'));
 		}
 
     	// Remove password from save array, for saving later

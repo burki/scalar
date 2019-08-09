@@ -76,8 +76,8 @@ Please select below.  <span id="multiple_info">Hold down <b>shift</b> (range) or
 		endif;
 ?>
 		<? if ($login_is_super): ?>
-		<li><a href="#tabs-all-users" style="color:#7d1d1d;">All users</a></li>
-		<li><a href="#tabs-all-books" style="color:#7d1d1d;">All books</a></li>
+		<li><a href="#tabs-all-users" style="color:#7d1d1d;"><?=lang('dashboard.all_users')?></a></li>
+		<li><a href="#tabs-all-books" style="color:#7d1d1d;"><?=lang('dashboard.all_books')?></a></li>
 		<li><a href="#tabs-tools" style="color:#7d1d1d;">Tools</a></li>
 		<? endif ?>
 	</ul>
